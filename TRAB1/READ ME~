@@ -1,0 +1,2 @@
+Para compilar: 
+	g++ t.cpp -o trab -lglut -lGLU -lGL

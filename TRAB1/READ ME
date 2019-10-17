@@ -1,0 +1,4 @@
+Para compilar: 
+	g++ t.cpp -o trab -lglut -lGLU -lGL
+
+Quando o programa for executado, deve apertar 'r', 's' ou 't' para realizar as rotações, escala e translações, respectivamentes. Caso nenhum desses botões sejam apertados, as setas do teclado não terão nenhum efeito sobre o objeto.

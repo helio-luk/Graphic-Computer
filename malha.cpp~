@@ -1,0 +1,21 @@
+// Iluminacao.c - Isabel H. Manssour
+// Um programa OpenGL que exemplifica a visualização 
+// de objetos 3D com a inserção de uma fonte de luz.
+// Este código está baseado nos exemplos disponíveis no livro 
+// "OpenGL SuperBible", 2nd Edition, de Richard S. e Wright Jr.
+
+#include <GL/glut.h>
+
+
+int main(int argc, char** argv){
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+	glutInitWindowSize(400,350);
+	glutCreateWindow("Visualizacao 3D");
+	glutDisplayFunc(Desenha);
+        glutReshapeFunc(AlteraTamanhoJanela);
+	glutMouseFunc(GerenciaMouse);
+	Inicializa();
+	glutMainLoop();
+}
+

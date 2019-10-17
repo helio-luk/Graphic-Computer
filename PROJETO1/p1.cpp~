@@ -1,0 +1,186 @@
+#include <GL/glut.h>
+#include <cmath>
+#include <iostream>
+#include <stdio.h>
+
+GLfloat theta = 0.0f;
+GLfloat t = -0.8f;
+GLfloat t2 = 0.0f;
+
+
+GLfloat k = -0.8f;
+GLfloat k2 = 0.0f;
+
+GLfloat w = 0.0f;
+GLfloat i = 0.0f;
+GLfloat i2 = 0.5f;
+
+GLfloat p = 7.0f;
+GLfloat up = 7.0f;
+
+void keyboard_special(int key, int x, int y){
+    if(key == GLUT_KEY_RIGHT){
+        p=p+1.1;
+    }else{
+        if(key == GLUT_KEY_LEFT){
+            p = p-1.1;
+        }else{
+            if(key == GLUT_KEY_UP){                
+		up = up+1.1f;
+            }else{
+                if(key == GLUT_KEY_DOWN){
+	            up = up-1.1f;                    
+                }
+	    }
+	}
+    }
+
+}
+
+
+
+void projecaoPerspectiva(){
+
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);    
+    //glEnable(GL_DEPTH_TEST);
+    
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    
+    /* define a posicao da camera, para onde ela aponta, e a orientacao da camera */
+    gluLookAt(7.0f, up, p, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,0.0f);
+    
+    //glutSpecialFunc(&keyboard_special);
+    glMatrixMode(GL_PROJECTION); 
+    glLoadIdentity();
+    
+    gluPerspective(45.0f,0.0f,1.0f,30.0f);
+}
+
+
+
+// Inicializa parâmetros de rendering
+void Inicializa (void){ 
+
+	glEnable(GL_LIGHTING);
+		GLfloat light_position[] = { 1.0f, 1.0f, 1.0f, 0.0f };
+		GLfloat mat_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+		glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+		//glLightfv(GL_LIGHT0, GL_DIFUSE, mat_diffuse);
+		glEnable(GL_LIGHT0);
+ 
+	glEnable(GL_COLOR_MATERIAL);
+		glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+	glDepthMask(GL_TRUE);
+	glEnable(GL_DEPTH_TEST); 
+	glDepthFunc(GL_LEQUAL);
+	glShadeModel (GL_SMOOTH);
+
+	GLfloat mat_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	GLfloat mat_shininess[] = { 100.0f };
+
+	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess);
+
+	glEnable(GL_NORMALIZE);
+	glEnable(GL_POINT_SMOOTH);
+
+
+	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+	glMaterialfv ( GL_FRONT_AND_BACK , GL_AMBIENT_AND_DIFFUSE , mat_diffuse );
+	glEnable(GL_CULL_FACE);
+ 
+	glClearColor(0, 0, 0, 0);
+
+}
+
+
+void animacao(){
+	i = i + 0.01f;
+	i2 = i2 + 0.1;
+	theta = theta + 1.3f;
+	t = 1.05f*(cos(i));
+
+	t2 = 0.6f*(cos(i2));
+
+	k = 1.05f*(sin(i));
+
+	k2 = 0.6f*(sin(i2));
+
+	if(i > 2*3.1415)
+		i = 0.0f;
+	if(i2 > 2*3.1415)
+		i2 = 0.0f;
+	glutPostRedisplay();	
+
+	
+}
+
+void Desenha(void){
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	projecaoPerspectiva();
+	glMatrixMode(GL_MODELVIEW);
+
+/*
+	//glMatrixMode(GL_MODELVIEW);
+	//glLoadIdentity();
+	gluLookAt(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 10.0f, 0.0f);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(0.0f,-1.0f,0.0f,20.0f); 
+	//glOrtho(-0.8f,0.8f,-0.8f,0.8f,-0.8f,0.8f);
+ 
+	
+
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	gluLookAt(0.0f, 0.0f,0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
+*/
+	//glRotatef(45.0f, 0.0f, 1.0f, 0.0f);	
+
+	glPushMatrix();		
+	glColor3f(1.0f,1.0f,0.0f);
+	glRotatef(theta, 0.0f, 1.0f, 0.0f);
+	glutSolidSphere(1.4f, 20.0f,20.0f);
+	glRotatef(-theta, 0.0f, 1.0f, 0.0f);		
+	glPopMatrix();
+
+	glPushMatrix();		
+	glColor3f(0.8f,1.0f,0.5f);
+	glTranslatef(t, k,0.0f);		
+	glTranslatef(t, w,k);		
+	glRotatef(theta, 0.0f, 1.0f, 0.0f);		
+	glutSolidSphere(0.2f, 20.0f,20.0f);
+	glRotatef(-theta, 0.0f, 1.0f, 0.0f);		
+	glPopMatrix();
+/*	
+	glPushMatrix();		
+	glColor3f(0.8f,1.0f,1.5f);
+	glTranslatef(t2,w,k2);		
+	glRotatef(theta, 0.0f, 1.0f, 0.0f);		
+	glutSolidSphere(0.1f, 20.0f,20.0f);
+	glRotatef(-theta, 0.0f, 1.0f, 0.0f);		
+	glPopMatrix();
+*/
+	
+	glutSwapBuffers();
+}
+
+
+int main(int argc, char** argv){
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
+	glutInitWindowSize(500,500);
+	glutInitWindowPosition(40,10);
+	glutCreateWindow("Quadrado");
+	Inicializa();
+	glutSpecialFunc(&keyboard_special);
+	glutDisplayFunc(Desenha);
+
+	glutIdleFunc(animacao);
+
+	glutMainLoop();
+}
+

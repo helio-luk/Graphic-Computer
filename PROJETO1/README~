@@ -1,0 +1,14 @@
+Para compilar:
+
+g++ projeto.cpp -o projeto -lglut -lGLU -lGL
+
+Para executar:
+
+./projeto
+
+
+Existem dois modos: modo livre e modo tradicional
+
+O modo default é o modo tradicional, onde basta clicar nas letras: q,w,e,r,t,y, para mudar a posição da camera.
+
+Para trocar para o modo livre basta clicar em 'b'. Neste modo o usuario pode controlar os três parametros (eye, up e center), utilizando, respectivamente, as setas (os parametros Z são controlados pelas teclas 'z' e 'x'), 'w', 'a', 's', 'd'(os parametros Z são controlados pelas letras 'n' e 'm') e 'i', 'j', 'k', 'l' (os parametros Z são controlados pelas teclas 'r' e 't').  
